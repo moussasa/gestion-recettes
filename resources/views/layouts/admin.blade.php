@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Admin - {{ config('app.name', 'Laravel') }}</title>
@@ -13,12 +14,14 @@
         body {
             background-color: #f8fafc;
         }
+
         .navbar-nav .nav-link.active {
             font-weight: bold;
             color: #0d6efd !important;
         }
     </style>
 </head>
+
 <body>
 
     <!-- Barre de navigation Bootstrap -->
@@ -26,38 +29,47 @@
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('home') }}">{{ config('app.name', 'Laravel') }}</a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin"
+                aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarAdmin">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Accueil</a>
+                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
+                            href="{{ route('home') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('recipes.index') ? 'active' : '' }}" href="{{ route('recipes.index') }}">Recettes</a>
+                        <a class="nav-link {{ request()->routeIs('recipes.index') ? 'active' : '' }}"
+                            href="{{ route('recipes.index') }}">Recettes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">À propos</a>
+                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}"
+                            href="{{ route('about') }}">À propos</a>
                     </li>
-                        <!-- Panier -->
+                    <!-- Panier -->
                     <li class="nav-item">
                         <a class="nav-link position-relative" href="{{ route('cart.index') }}">
                             🛒
                             @auth
-                                @if(auth()->user()->cart)
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                @if (auth()->user()->cart)
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                         {{ auth()->user()->cart->totalItems() }}
                                     </span>
                                 @endif
                             @else
-                                @if(session('cart_session_id'))
+                                @if (session('cart_session_id'))
                                     @php
-                                        $cart = \App\Models\Cart::where('session_id', session('cart_session_id'))->first();
+                                        $cart = \App\Models\Cart::where(
+                                            'session_id',
+                                            session('cart_session_id'),
+                                        )->first();
                                     @endphp
-                                    @if($cart)
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    @if ($cart)
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             {{ $cart->totalItems() }}
                                         </span>
                                     @endif
@@ -85,7 +97,7 @@
                         </li>
                     @else
                         <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Connexion</a></li>
-                        {{-- @if(Route::has('register'))
+                        {{-- @if (Route::has('register'))
                             <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Inscription</a></li>
                         @endif --}}
                     @endauth
@@ -97,42 +109,51 @@
     <!-- Contenu principal -->
     <main class="py-5">
         <div class="container">
-            @yield('header') 
+            @yield('header')
 
             <div class="card shadow-sm">
                 <div class="card-body">
-                   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ route('admin.dashboard') }}">Tableau de bord</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarAdmin">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.recipes.index') }}">Recettes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.ingredients.index') }}">Ingrédients</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.users.index') }}">Utilisateurs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.reviews.index') }}">Avis</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.orders.index') }}">Commandes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.settings.edit') }}">Paramètres</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<br>
-                        @yield('content') 
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                        <div class="container">
+                            <a class="navbar-brand fw-bold" href="{{ route('admin.dashboard') }}">Tableau de bord</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarAdmin">
+                                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.recipes.index') }}">Recettes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link"
+                                            href="{{ route('admin.ingredients.index') }}">Ingrédients</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.users.index') }}">Utilisateurs</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.reviews.index') }}">Avis</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.orders.index') }}">Commandes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.settings.edit') }}">Paramètres</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <br>
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                        <br>
+                    @endif
+                    @yield('content')
                 </div>
             </div>
         </div>
@@ -141,4 +162,5 @@
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

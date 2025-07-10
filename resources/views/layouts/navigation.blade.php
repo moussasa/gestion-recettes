@@ -10,13 +10,13 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('Accueil') }}
+                        Accueil
                     </x-nav-link>
                     <x-nav-link :href="route('recipes.index')" :active="request()->routeIs('recipes.index')">
-                        {{ __('Recettes') }}
+                        Recettes
                     </x-nav-link>
                     <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
-                        {{ __('À propos') }}
+                        À propos
                     </x-nav-link>
                 </div>
             </div>
@@ -39,7 +39,7 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('admin.dashboard')">
-                                    {{ __('Tableau de bord') }}
+                                    Tableau de bord
                                 </x-dropdown-link>
 
                                 <!-- Authentication -->
@@ -49,7 +49,7 @@
                                     <x-dropdown-link :href="route('logout')"
                                             onclick="event.preventDefault();
                                                         this.closest('form').submit();">
-                                        {{ __('Déconnexion') }}
+                                        Déconnexion
                                     </x-dropdown-link>
                                 </form>
                             </x-slot>
@@ -99,13 +99,13 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                {{ __('Accueil') }}
+                Accueil
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('recipes.index')" :active="request()->routeIs('recipes.index')">
-                {{ __('Recettes') }}
+                Recettes
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('about')" :active="request()->routeIs('about')">
-                {{ __('À propos') }}
+                À propos
             </x-responsive-nav-link>
         </div>
 
@@ -119,7 +119,7 @@
 
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('admin.dashboard')">
-                        {{ __('Tableau de bord') }}
+                        Tableau de bord
                     </x-responsive-nav-link>
 
                     <!-- Authentication -->
@@ -129,19 +129,19 @@
                         <x-responsive-nav-link :href="route('logout')"
                                 onclick="event.preventDefault();
                                             this.closest('form').submit();">
-                            {{ __('Déconnexion') }}
+                            Déconnexion
                         </x-responsive-nav-link>
                     </form>
                 </div>
             @else
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('login')">
-                        {{ __('Connexion') }}
+                        Connexion
                     </x-responsive-nav-link>
 
                     @if (Route::has('register'))
                         <x-responsive-nav-link :href="route('register')">
-                            {{ __('Inscription') }}
+                            Inscription
                         </x-responsive-nav-link>
                     @endif
                 </div>
@@ -149,7 +149,7 @@
             
             <div class="px-4 py-2">
                 <x-responsive-nav-link :href="route('cart.index')">
-                    {{ __('Panier') }}
+                    Panier
                 </x-responsive-nav-link>
             </div>
         </div>

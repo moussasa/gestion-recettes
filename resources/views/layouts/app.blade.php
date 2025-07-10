@@ -16,8 +16,8 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    
-    
+
+
 </head>
 
 <body style="background-color: #f8fafc;">
@@ -26,8 +26,9 @@
             <a class="navbar-brand" href="{{ route('home') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -35,31 +36,39 @@
                 <!-- Left -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Accueil</a>
+                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
+                            href="{{ route('home') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('recipes.index') ? 'active' : '' }}" href="{{ route('recipes.index') }}">Recettes</a>
+                        <a class="nav-link {{ request()->routeIs('recipes.index') ? 'active' : '' }}"
+                            href="{{ route('recipes.index') }}">Recettes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">À propos</a>
+                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}"
+                            href="{{ route('about') }}">À propos</a>
                     </li>
-                       <!-- Panier -->
+                    <!-- Panier -->
                     <li class="nav-item">
                         <a class="nav-link position-relative" href="{{ route('cart.index') }}">
                             🛒
                             @auth
-                                @if(auth()->user()->cart)
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                @if (auth()->user()->cart)
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                         {{ auth()->user()->cart->totalItems() }}
                                     </span>
                                 @endif
                             @else
-                                @if(session('cart_session_id'))
+                                @if (session('cart_session_id'))
                                     @php
-                                        $cart = \App\Models\Cart::where('session_id', session('cart_session_id'))->first();
+                                        $cart = \App\Models\Cart::where(
+                                            'session_id',
+                                            session('cart_session_id'),
+                                        )->first();
                                     @endphp
-                                    @if($cart)
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    @if ($cart)
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             {{ $cart->totalItems() }}
                                         </span>
                                     @endif
@@ -98,7 +107,7 @@
                         @endif --}}
                     @endauth
 
-                 
+
                 </ul>
             </div>
         </div>
@@ -107,6 +116,12 @@
     <!-- Header -->
     <header class="bg-white shadow-sm mb-4">
         <div class="container py-4">
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+                <br>
+            @endif
             @yield('header') {{-- Utilise @section('header') dans tes vues --}}
         </div>
     </header>
@@ -123,51 +138,54 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Footer -->
-<footer class="bg-white border-top shadow-sm mt-5">
-    <div class="container py-4">
-        <div class="row">
-            <!-- Colonne 1 : logo et nom -->
-            <div class="col-md-4 mb-3 text-center text-md-start">
-                <h5 class="text-indigo-700">{{ config('app.name', 'Laravel') }}</h5>
-                <p class="small text-muted">Partagez, cuisinez, régalez-vous ! Explorez nos meilleures recettes maison.</p>
+    <footer class="bg-white border-top shadow-sm mt-5">
+        <div class="container py-4">
+            <div class="row">
+                <!-- Colonne 1 : logo et nom -->
+                <div class="col-md-4 mb-3 text-center text-md-start">
+                    <h5 class="text-indigo-700">{{ config('app.name', 'Laravel') }}</h5>
+                    <p class="small text-muted">Partagez, cuisinez, régalez-vous ! Explorez nos meilleures recettes
+                        maison.</p>
+                </div>
+
+                <!-- Colonne 2 : navigation -->
+                <div class="col-md-4 mb-3 text-center">
+                    <h6 class="text-muted">Navigation</h6>
+                    <ul class="list-unstyled small">
+                        <li><a href="{{ route('home') }}" class="text-decoration-none text-muted">Accueil</a></li>
+                        <li><a href="{{ route('recipes.index') }}" class="text-decoration-none text-muted">Recettes</a>
+                        </li>
+                        <li><a href="{{ route('about') }}" class="text-decoration-none text-muted">À propos</a></li>
+                        @auth
+                            <li><a href="{{ route('admin.dashboard') }}" class="text-decoration-none text-muted">Tableau de
+                                    bord</a></li>
+                        @endauth
+                    </ul>
+                </div>
+
+                <!-- Colonne 3 : contact -->
+                <div class="col-md-4 mb-3 text-center text-md-end">
+                    <h6 class="text-muted">Contact</h6>
+                    @php
+                        $company = \App\Models\CompanySetting::first();
+                    @endphp
+                    @if ($company)
+                        <p class="small text-muted mb-1">{{ $company->address }}</p>
+                        <p class="small text-muted mb-1">{{ $company->phone }}</p>
+                        <p class="small text-muted">{{ $company->email }}</p>
+                    @else
+                        <p class="small text-muted">Entreprise non renseignée.</p>
+                    @endif
+                </div>
             </div>
 
-            <!-- Colonne 2 : navigation -->
-            <div class="col-md-4 mb-3 text-center">
-                <h6 class="text-muted">Navigation</h6>
-                <ul class="list-unstyled small">
-                    <li><a href="{{ route('home') }}" class="text-decoration-none text-muted">Accueil</a></li>
-                    <li><a href="{{ route('recipes.index') }}" class="text-decoration-none text-muted">Recettes</a></li>
-                    <li><a href="{{ route('about') }}" class="text-decoration-none text-muted">À propos</a></li>
-                    @auth
-                        <li><a href="{{ route('admin.dashboard') }}" class="text-decoration-none text-muted">Tableau de bord</a></li>
-                    @endauth
-                </ul>
-            </div>
+            <hr class="my-3">
 
-            <!-- Colonne 3 : contact -->
-            <div class="col-md-4 mb-3 text-center text-md-end">
-                <h6 class="text-muted">Contact</h6>
-                @php
-                    $company = \App\Models\CompanySetting::first();
-                @endphp
-                @if($company)
-                    <p class="small text-muted mb-1">{{ $company->address }}</p>
-                    <p class="small text-muted mb-1">{{ $company->phone }}</p>
-                    <p class="small text-muted">{{ $company->email }}</p>
-                @else
-                    <p class="small text-muted">Entreprise non renseignée.</p>
-                @endif
+            <div class="text-center small text-muted">
+                &copy; {{ now()->year }} {{ config('app.name', 'Laravel') }}. Tous droits réservés.
             </div>
         </div>
-
-        <hr class="my-3">
-
-        <div class="text-center small text-muted">
-            &copy; {{ now()->year }} {{ config('app.name', 'Laravel') }}. Tous droits réservés.
-        </div>
-    </div>
-</footer>
+    </footer>
 
 </body>
 
