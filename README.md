@@ -1,61 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Application de Gestion de Recettes Culinaires
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Application web complète pour la gestion de recettes de cuisine avec système d'authentification, gestion des ingrédients, notation des recettes et commandes.
 
-## About Laravel
+## Prérequis
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.0+
+- Composer 2.0+
+- MySQL 8.0+
+- Node.js 14+ (pour les assets frontend)
+- Serveur web (Apache/Nginx) ou PHP built-in server
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Cloner le dépôt
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+git clone https://github.com/votre-repo/gestion-recettes.git
+cd gestion-recettes
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Installer les dépendances PHP
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+composer install
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 3. Installer les dépendances JavaScript
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+npm install
+npm run build
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Configurer l'environnement
 
-## Security Vulnerabilities
+Copier le fichier `.env.example` vers `.env` et modifier les paramètres :
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+cp .env.example .env
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+Éditer le fichier `.env` et configurer notamment :
+
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nom_de_votre_base
+DB_USERNAME=utilisateur_mysql
+DB_PASSWORD=mot_de_passe_mysql
+
+
+### 5. Générer la clé d'application
+
+
+php artisan key:generate
+
+
+### 6. Exécuter les migrations et seeders
+
+
+php artisan migrate --seed
+
+
+Ceci va :
+- Créer toutes les tables nécessaires
+- Créer un utilisateur admin par défaut :
+  - Email: `admin@admin.com`
+  - Mot de passe: `11111111`
+- Initialiser les informations de l'entreprise
+
+### 7. Configurer le stockage (optionnel)
+
+Pour permettre le stockage des images :
+
+
+php artisan storage:link
+
+
+### 8. Démarrer l'application
+
+Pour le développement, vous pouvez utiliser le serveur intégré :
+
+
+php artisan serve
+
+
+L'application sera accessible à l'adresse : `http://localhost:8000`
+
+Pour la production, configurez votre serveur web (Apache/Nginx) pour pointer vers le dossier `public`.
+
+## Accès
+
+- **Interface publique** : `/`
+- **Interface d'administration** : `/admin`
+  - Identifiants admin :
+    - Email: `admin@admin.com`
+    - Mot de passe: `11111111`
+
+## Fonctionnalités
+
+### Pour les visiteurs
+- Voir la liste des recettes
+- Voir le détail d'une recette
+- Noter et commenter les recettes
+- Passer des commandes (sans compte)
+
+### Pour les utilisateurs enregistrés
+- Toutes les fonctionnalités visiteurs
+- Voir l'historique des commandes
+- Modifier son profil
+
+### Pour les administrateurs
+- Gestion complète des recettes
+- Gestion des ingrédients
+- Gestion des utilisateurs
+- Visualisation des commandes
+- Modération des avis
+- Configuration des informations de l'entreprise
+
+## Sécurité
+
+Après installation en production :
+1. **Changez immédiatement** le mot de passe admin
+2. Mettez à jour les informations de l'entreprise
+3. Configurez HTTPS
+4. Sauvegardez régulièrement votre base de données
+
+## Licence
+
+
+Ce README fournit toutes les instructions nécessaires pour installer et configurer l'application, tout en restant clair et concis.
